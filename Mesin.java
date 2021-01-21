@@ -4,26 +4,33 @@
  * and open the template in the editor.
  */
 package Tiket;
-import java.util.Scanner;
+//import java.util.Scanner;
 
 public class Mesin {
-
+    private User user;
+    private String publicTransport;
+    private String location;
+    private int price;
+    private int pay;
     
-    static Scanner input = new Scanner (System.in);
-    static String name;
-    static String transportasi;
-    static String tujuan;
-    static int tarif;
-    static int bayar;
-    
-    //konstruktor, inisialisasi dari sebuah objek
-    public Mesin (String nama, String kendaraan, String tj, int hrg, int ttl){
-        name = nama;
-        transportasi = kendaraan;
-        tujuan = tj;
-        tarif = hrg;
-        bayar = ttl;     
+     
+    public void setUser(User user) {
+        this.user = user;
     }
+    
+    public void setTransportation(String transportation) {
+        this.publicTransport = transportation;
+        // Mengubah id transportasi menjadi nama transportasi
+        transport(transportation);
+        // Mendapatkan harga dari transportasi
+        ticket(this.publicTransport);
+    }
+    
+    public void setLocation(String location) {
+        this.location = location;
+        // Mengubahn id location menjadi nama location
+        tjn(location);
+    } 
     
     public void menu(){
        
@@ -32,7 +39,7 @@ public class Mesin {
         System.out.println("1. Pesawat  585000");
         System.out.println("2. Kereta Api 332000");
         System.out.println("3. Bus 190000");
-        System.out.println("4. Air Spaec 1333999");
+        System.out.println("4. Air Space 1333999");
         
         System.out.println("==============================");
         System.out.println("Pilih Tujuan");
@@ -41,133 +48,103 @@ public class Mesin {
         System.out.println("3. Amerika");
         System.out.println("==============================");
 
-    }
-    
-    //method input 
-    public String masuk (String input){
-        Scanner nama = new Scanner (System.in);
-        input = nama.nextLine();
-        return input;
-    }
+    }  
     
     //pemilihan transportasi 
     public String transport (String pilih){
+//        
         switch (pilih){
             case "1" :
-                transportasi = "Pesawat";
+                publicTransport = "Pesawat";
                 break;
                 
             case "2" :
-                transportasi = "Kereta Api";
+                publicTransport = "Kereta Api";
                 break;
                 
             case "3" :
-                transportasi = "Bus";
+                publicTransport = "Bus";
                 break;
                 
             case "4" :
-                transportasi = "Air Space";
+                publicTransport = "Air Space";
                 break;             
         }
-        return transportasi;
+        return publicTransport;
     }
+    
     //pemilihan tujuan
     public String tjn (String opsi){
-        tujuan = opsi;
+        location = opsi;
         switch (opsi){
             case "1" :
-                tujuan = "Jakarta";
+                location = "Jakarta";
                 break;
             
             case "2" :
-                tujuan = "Bandung";
+                location = "Bandung";
                 break;
                 
             case "3" :
-                tujuan = "Amerika";
+                location = "Amerika";
                 break;      
         }
-        return tujuan;
+        return location;
     }
     //harga transportasi
-    public int tiket (String kendaraan){
-        transportasi = kendaraan;
-        switch (transportasi){
+    public int ticket (String T){
+        publicTransport = T;
+        switch (publicTransport){
             
             case "Pesawat":
-                tarif = 585000;
+                price = 585000;
                 break;
             
             case "Kereta Api":
-                tarif = 332000;
+                price = 332000;
                 break;
                 
             case "Bus":
-                tarif = 190000;
+                price = 190000;
                 break;
                 
             case "Air Space":
-                tarif = 1333999;
+                price = 1333999;
                 break;
             
         }
-        return tarif;
+        return price;
     }
-    //method diskon tiap tiap tujuan
-    public int diskon (String total){
-        tujuan = total;
-        if (null != tujuan)switch (tujuan) {
+    
+
+    public int diskon (){
+        if (null != location)switch (location) {
             case "Jakarta":
-                tarif = tarif - (int) (tarif * 0.04);           
+                price = price - (int) (price * 0.04);           
                 break;
             case "Bandung":
-                tarif = tarif - (int) (tarif * 0.08);
+                price = price - (int) (price * 0.08);
                 break;
             case "Amerika":
-                tarif = tarif - (int) (tarif * 0.06);
+                price = price - (int) (price * 0.06);
                 break;
             default:
                 break;
         }
-        return tarif;
-    }
-    //total bayar
-    public int bill (int Bayar){
-        bayar = tarif;
-        System.out.println("pembayaran: "+tarif);    
-    return tarif;
+        return price;
     }
     
-    public void print(String nama, String kendaraan, String tj, int hrg, int ttl){
-        user masuk = new user ();
-        masuk.input();
+    public void print(){ 
+
         System.out.println("===========================");
         System.out.println("       Tiket Anda          ");
         System.out.println("===========================");
-        System.out.println("Nama penumpang = "+ masuk.getNama());
-        System.out.println("Tiket = "+ kendaraan);
-        System.out.println("Tujuan = "+ tj);
-        System.out.println("Total bayar = "+ttl);
-        
+        System.out.println("Nama penumpang = "+ user.getName());
+        System.out.println("Tiket = "+ publicTransport);
+        System.out.println("Tujuan = "+ location);
+        System.out.println("Total bayar = "+price);
     }
     
-    public static void main(String []args){
-        user masuk = new user ();
-        masuk.input();
-        Mesin scan = new Mesin(name, transportasi,tujuan,tarif,bayar);
-        scan.menu();   //
-        System.out.print("Masukkan tiket yang anda pilih = ");
-        String kendaraan = scan.masuk(transportasi); //input tiket
-        scan.transport(kendaraan);      //pendeklarasian transpor yg dipilih
-        scan.tiket(transportasi);       //pendeklarasian harga masing" transportasi
-        System.out.print("Pilih tujuan anda = ");
-        String tj = scan.masuk(tujuan);  
-        scan.tjn(tj);                   //deklarasi tujuan yg dipilih
-        scan.diskon(tujuan);            //menghitung diskon sesuai tujuan yg dipilih
-        scan.bill(bayar);               //memanggil method bill
-        scan.print(name, transportasi, tujuan, tarif, bayar);
-        
-    }    
 }
  
 

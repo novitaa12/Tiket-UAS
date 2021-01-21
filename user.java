@@ -7,16 +7,18 @@ package Tiket;
 
 import java.util.Scanner;
 
-public class user {
-    Scanner input = new Scanner (System.in);
-    String nama;
+public class User {
+    private String name;
     
-    public String getNama(){
-        return nama;
+    public User(String name) {
+        this.name = name;
     }
     
-    public void input() {
-    System.out.print("Masukkan nama anda : ");
-        nama = input.nextLine();  
-        }
+    public String getName(){
+        return name;
+    }
+    
+    public void setName(String nama) {
+        this.name = name;
+    }
 }
